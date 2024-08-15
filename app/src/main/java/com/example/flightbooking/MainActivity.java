@@ -99,8 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationItem("Quản lý đặt chỗ", R.drawable.baseline_folder_24, "Path"),
                 new NavigationItem("My Profile", R.drawable.person_24, "Path"),
                 new NavigationItem("Trang chủ 4", R.drawable.baseline_home_24, "Path"),
-                new NavigationItem("Trang chủ 5", R.drawable.baseline_home_24, "Path"),
-                new NavigationItem("Trang chủ 6", R.drawable.baseline_home_24, "Path")
+                new NavigationItem("Trang chủ 5", R.drawable.baseline_home_24, "Path")
         ));
         navigationItemAdapter = new NavigationItemAdapter(MainActivity.this, R.layout.navigation_item, navigationItems);
         binding.grdView.setAdapter(navigationItemAdapter);
