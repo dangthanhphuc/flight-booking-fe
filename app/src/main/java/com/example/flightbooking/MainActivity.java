@@ -14,21 +14,22 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.flightbooking.adapters.NavigationItemAdapter;
 import com.example.flightbooking.databinding.ActivityMainBinding;
 import com.example.flightbooking.models.NavigationItem;
-import com.example.flightbooking.services.Specialty;
-import com.example.flightbooking.services.TestService;
+import com.example.flightbooking.network.HttpRequest;
+import com.example.flightbooking.network.models.Specialty;
+import com.example.flightbooking.network.api.TestService;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Retrofit;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private List<Specialty> specialties;
     private ArrayAdapter<String> specialtiesArrayAdapter;
-
-    private TestService testService;
 
     private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
 
@@ -41,18 +42,12 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         initial();
         loadData();
 
-//        Retrofit retrofit = ApiClient.getClient();
-//        testService = retrofit.create(TestService.class);
-//
+        TestService testService = HttpRequest.createService(TestService.class);
+
 //        getSpecialties();
 
 //        eventForBottomSheetBehavior();
