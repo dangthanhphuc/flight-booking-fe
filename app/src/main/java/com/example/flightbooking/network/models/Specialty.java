@@ -1,6 +1,5 @@
-package com.example.flightbooking.services;
+package com.example.flightbooking.network.models;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
