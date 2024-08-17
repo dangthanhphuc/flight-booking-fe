@@ -3,6 +3,7 @@ package com.example.flightbooking;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -104,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         navigationItemAdapter = new NavigationItemAdapter(MainActivity.this, R.layout.navigation_item, navigationItems);
         binding.grdView.setAdapter(navigationItemAdapter);
     }
+
+
+
+
+
 
 //    private void getSpecialties() {
 //        Call<List<Specialty>> specialtiesCall = testService.getSpecialties();
