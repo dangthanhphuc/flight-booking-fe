@@ -47,7 +47,6 @@ public class LookupInformationActivity extends AppCompatActivity {
         adapter = new DateAdapter(dateList);
         binding.recyclerView.setAdapter(adapter);
 
-        // Add spacing between items directly
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.item_spacing);
         binding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override

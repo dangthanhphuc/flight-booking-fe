@@ -93,17 +93,25 @@
             android:gravity="center"
             android:background="@drawable/button_background_update"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#7E8383"/>
+
         <LinearLayout
             android:id="@+id/lnrSortFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingTop="12dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sắp xếp &amp; lọc "/>
+                android:text="Sắp xếp &amp; lọc "
+                android:textColor="#000"
+                android:gravity="center_vertical"/>
 
             <ImageView
                 android:layout_width="20dp"
