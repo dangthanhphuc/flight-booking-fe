@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.FlightBooking" parent="Base.Theme.FlightBooking" />
+    <dimen name="item_spacing">20dp</dimen>
 </resources>
