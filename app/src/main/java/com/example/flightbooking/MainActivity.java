@@ -1,10 +1,11 @@
 package com.example.flightbooking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 
 import androidx.activity.EdgeToEdge;
@@ -12,27 +13,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.flightbooking.adapters.NavigationItemAdapter;
+import com.example.flightbooking.auth.AuthManager;
 import com.example.flightbooking.databinding.ActivityMainBinding;
 import com.example.flightbooking.models.NavigationItem;
 import com.example.flightbooking.network.HttpRequest;
-import com.example.flightbooking.network.models.Specialty;
-import com.example.flightbooking.network.api.TestService;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import retrofit2.Retrofit;
-
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private List<Specialty> specialties;
-    private ArrayAdapter<String> specialtiesArrayAdapter;
-
-    private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
-
+    private AuthManager authManager;
     private NavigationItemAdapter navigationItemAdapter;
 
 
@@ -43,36 +37,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        authManager = new AuthManager(this);
+
         initial();
         loadData();
+        addEvent();
 
-        TestService testService = HttpRequest.createService(TestService.class);
-
-//        getSpecialties();
-
-//        eventForBottomSheetBehavior();
     }
 
-//    private void eventForBottomSheetBehavior() {
-//        LinearLayout linearLayout = findViewById(binding.lnBottomSheet.getId());
-//        bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
-//
-//        // State
-//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//
-//        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-//            @Override
-//            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-//
-//            }
-//
-//            @Override
-//            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-//
-//            }
-//        });
-//
-//    }
 
 
     @Override
@@ -94,40 +66,48 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData() {
         List<NavigationItem> navigationItems = new ArrayList<>(Arrays.asList(
-                new NavigationItem("Trang chủ", R.drawable.baseline_home_24, "Path"),
-                new NavigationItem("Lịch bay", R.drawable.airplane_ticket_24, "Path"),
-                new NavigationItem("Quản lý đặt chỗ", R.drawable.baseline_folder_24, "Path"),
-                new NavigationItem("My Profile", R.drawable.person_24, "Path"),
-                new NavigationItem("Trang chủ 4", R.drawable.baseline_home_24, "Path"),
-                new NavigationItem("Trang chủ 5", R.drawable.baseline_home_24, "Path")
+                new NavigationItem("Trang chủ", R.drawable.baseline_home_24, "home"),
+                new NavigationItem("Lịch bay", R.drawable.airplane_ticket_24, "flight_search"),
+                new NavigationItem("Quản lý đặt chỗ", R.drawable.baseline_folder_24, "booking_management"),
+                new NavigationItem("My Profile", R.drawable.person_24, "my_profile"),
+                new NavigationItem("Đăng xuất", R.drawable.baseline_logout_24, "logout"),
+                new NavigationItem("Trang chủ 5", R.drawable.baseline_home_24, "lookup")
         ));
         navigationItemAdapter = new NavigationItemAdapter(MainActivity.this, R.layout.navigation_item, navigationItems);
         binding.grdView.setAdapter(navigationItemAdapter);
     }
 
-//    private void getSpecialties() {
-//        Call<List<Specialty>> specialtiesCall = testService.getSpecialties();
-//        specialtiesCall.enqueue(
-//                new Callback<List<Specialty>>() {
-//                    @Override
-//                    public void onResponse(@NonNull Call<List<Specialty>> call, @NonNull Response<List<Specialty>> response) {
-//                        if (response.isSuccessful()){
-//                            specialties = response.body();
-//                            loadData();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(@NonNull Call<List<Specialty>> call, @NonNull Throwable throwable) {
-//                        System.out.println(throwable);
-//                    }
-//                }
-//        );
-//    }
+    private void addEvent(){
+        binding.grdView.setOnItemClickListener(new AdapterView. OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NavigationItem navigationItem = navigationItemAdapter.getNavigationItems().get(position);
+                Intent intent = null;
+                switch (navigationItem.getPath()){
+                    case "logout":
+                        authManager.logout();
+                        break;
+                    case "flight_search":
+                        intent = new Intent(MainActivity.this, FlightSearchActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "booking_management":
+                        intent = new Intent(MainActivity.this, BookingManagementActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "my_profile":
+                        intent = new Intent(MainActivity.this, MyProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "lookup":
+                        intent = new Intent(MainActivity.this, LookupInformationActivity.class);
+                        startActivity(intent);
+                        break;
 
+                }
 
-
-
-
+            }
+        });
+    }
 
 }
