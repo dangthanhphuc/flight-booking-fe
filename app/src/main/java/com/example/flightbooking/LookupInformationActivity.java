@@ -1,72 +1,168 @@
 package com.example.flightbooking;
 
+import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flightbooking.adapters.LookupInformationAdapter;
 import com.example.flightbooking.databinding.ActivityLookupInformationBinding;
-import com.example.flightbooking.network.HttpRequest;
-import com.example.flightbooking.network.api.AirportService;
-import com.example.flightbooking.network.api.FlightService;
-import com.example.flightbooking.network.models.Response;
-import com.example.flightbooking.network.responses.AirportResponse;
-import com.example.flightbooking.network.responses.FlightResponse;
+import com.example.flightbooking.databinding.ItemDateBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
+import java.util.Locale;
 
 public class LookupInformationActivity extends AppCompatActivity {
 
-    private FlightService flightService;
-    private LookupInformationAdapter lookupInformationAdapter;
-    private ActivityLookupInformationBinding binding;
+    ActivityLookupInformationBinding binding;
+    private List<Date> dateList;
+    private LinearLayoutManager layoutManager;
+    private DateAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         binding = ActivityLookupInformationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        dateList = new ArrayList<>();
+        populateDateList();
+
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        binding.recyclerView.setLayoutManager(layoutManager);
+
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(binding.recyclerView);
+
+        adapter = new DateAdapter(dateList);
+        binding.recyclerView.setAdapter(adapter);
+
+        // Add spacing between items directly
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.item_spacing);
+        binding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                // Add spacing to the right of each item except the last one
+                int itemPosition = parent.getChildAdapterPosition(view);
+                int itemCount = state.getItemCount();
+                if (itemPosition < itemCount - 1) {
+                    outRect.right = spacingInPixels;
+                }
+            }
         });
 
-        flightService = HttpRequest.createService(FlightService.class, this);
-        getFlights();
+        addEvents();
+        updateNavigationButtons();
     }
 
-    private void getFlights() {
-            Call<Response<List<FlightResponse>>> call  = flightService.getFlights();
-            call.enqueue(new Callback<Response<List<FlightResponse>>>() {
 
-                @Override
-                public void onResponse(Call<Response<List<FlightResponse>>> call, retrofit2.Response<Response<List<FlightResponse>>> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        // Xử lý dữ liệu trả về
-                        // Thay lại layout hiển thị
-                        lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, R.layout.navigation_item, response.body().getData());
-//                        binding.grdView.setAdapter(navigationItemAdapter);
-                    } else {
-                        Log.e("Error", "Request failed");
-                    }
-                }
+    private void addEvents() {
+        binding.imvExit.setOnClickListener(view -> {
+            Intent intent = new Intent(LookupInformationActivity.this, FlightSearchActivity.class);
+            startActivity(intent);
+        });
 
-                @Override
-                public void onFailure(Call<Response<List<FlightResponse>>> call, Throwable throwable) {
-                    call.timeout();
-                }
-
-            });
+        binding.imvLeft.setOnClickListener(view -> scrollToPreviousItems());
+        binding.imvRight.setOnClickListener(view -> scrollToNextItems());
+        binding.imvLeft.setOnTouchListener((v, event) -> handleScrollOnTouch(event, -3));
+        binding.imvRight.setOnTouchListener((v, event) -> handleScrollOnTouch(event, 3));
     }
 
+    private void populateDateList() {
+        Calendar calendar = Calendar.getInstance();
+        for (int i = 0; i < 30; i++) { // Show 30 days
+            dateList.add(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+    }
+
+    private void scrollToPreviousItems() {
+        int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+        int targetPosition = Math.max(firstVisibleItemPosition - 3, 0);
+        binding.recyclerView.smoothScrollToPosition(targetPosition);
+        updateNavigationButtons();
+    }
+
+    private void scrollToNextItems() {
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        int targetPosition = Math.min(lastVisibleItemPosition + 3, dateList.size() - 1);
+        binding.recyclerView.smoothScrollToPosition(targetPosition);
+        updateNavigationButtons();
+    }
+
+    private boolean handleScrollOnTouch(MotionEvent event, int scrollBy) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (scrollBy < 0) {
+                scrollToPreviousItems();
+            } else {
+                scrollToNextItems();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void updateNavigationButtons() {
+        int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+
+        binding.imvLeft.setEnabled(firstVisibleItemPosition > 0);
+        binding.imvRight.setEnabled(lastVisibleItemPosition < dateList.size() - 1);
+    }
+
+    private class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder> {
+        private final List<Date> dateList;
+
+        public DateAdapter(List<Date> dateList) {
+            this.dateList = dateList;
+        }
+
+        @Override
+        public DateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            ItemDateBinding binding = ItemDateBinding.inflate(getLayoutInflater(), parent, false);
+            return new DateViewHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(DateViewHolder holder, int position) {
+            Date date = dateList.get(position);
+            holder.binding.dayOfWeek.setText(getDayOfWeek(date));
+            holder.binding.date.setText(getDate(date));
+        }
+
+        @Override
+        public int getItemCount() {
+            return dateList.size();
+        }
+
+        public class DateViewHolder extends RecyclerView.ViewHolder {
+            ItemDateBinding binding;
+
+            public DateViewHolder(ItemDateBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+            }
+        }
+
+        private String getDayOfWeek(Date date) {
+            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", new Locale("vi"));
+            return dayFormat.format(date);
+        }
+
+        private String getDate(Date date) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("vi"));
+            return dateFormat.format(date);
+        }
+    }
 }

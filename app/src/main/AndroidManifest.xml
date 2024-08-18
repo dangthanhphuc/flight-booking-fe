@@ -24,9 +24,6 @@
             android:exported="false" />
         <activity
             android:name=".LookupInformationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,11 +32,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ActivityAccountDetail"
+            android:exported="true" />
+        <activity
             android:name=".BookingManagementActivity"
             android:exported="false" />
         <activity
             android:name=".FlightSearchActivity"
-            android:exported="false" />
+            android:exported="true"/>
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -48,7 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".MyProfileActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
