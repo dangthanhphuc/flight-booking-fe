@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FlightBooking</string>
+    <string name="title_activity">Tìm kiếm chuyến bay</string>
 </resources>

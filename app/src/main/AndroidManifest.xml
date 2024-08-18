@@ -17,6 +17,12 @@
         android:theme="@style/Theme.FlightBooking"
         tools:targetApi="31">
         <activity
+            android:name=".ShowActivityCalendar"
+            android:exported="false" />
+        <activity
+            android:name=".FindFlightActivity"
+            android:exported="false" />
+        <activity
             android:name=".LookupInformationActivity"
             android:exported="false" />
         <activity
@@ -45,7 +51,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
