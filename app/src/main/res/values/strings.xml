@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">FlightBooking</string>
+
+    <string name="title_activity">Tìm kiếm chuyến bay</string>
+
     <string-array name="titles_array">
         <item>Ông</item>
         <item>Bà</item>
@@ -10,4 +13,5 @@
         <item>Nam</item>
         <item>Nữ</item>
     </string-array>
+
 </resources>
