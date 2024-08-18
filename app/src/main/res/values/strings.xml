@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">FlightBooking</string>
+    <string-array name="titles_array">
+        <item>Ông</item>
+        <item>Bà</item>
+        <item>Cô/Chị</item>
+    </string-array>
+
+    <string-array name="genders_array">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
 </resources>
