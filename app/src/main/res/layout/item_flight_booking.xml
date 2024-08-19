@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_corner_background"
+    android:backgroundTint="@color/white"
+    android:padding="16dp"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <!-- Booking Code and Status -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="start"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/booking_code_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã đặt chỗ:"
+                android:textColor="#9B9B9B"
+                android:textSize="14sp"
+                android:gravity="start"/>
+
+            <TextView
+                android:id="@+id/txtBookingCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6MFAWU"
+                android:textColor="#FFC107"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingLeft="8dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtTicketStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHƯA XUẤT VÉ"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:background="@drawable/bg_danger_status"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:layout_marginLeft="94dp"
+            android:layout_gravity="end"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Divider Line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginVertical="18dp" />
+
+    <!-- Flight Details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Departure Airport -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtDepartureAirportCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HAN"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDepartureAirportName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hà Nội, Việt Nam"
+                android:textColor="#838383"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtDepartureTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chủ nhật, 18/08/2024\n08:55"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Flight Icon -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginHorizontal="8dp">
+
+            <ImageView
+                android:id="@+id/icFlightTakeoff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_flight_takeoff_24"/>
+
+<!--            <ImageView-->
+<!--                android:id="@+id/icCommit"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_commit_24"/>-->
+
+            <ImageView
+                android:id="@+id/icFlightLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_horizontal_rule_24"/>
+
+            <ImageView
+                android:id="@+id/icFlightLand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_flight_land_24"/>
+
+        </LinearLayout>
+
+        <!-- Arrival Airport -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtArrivalAirportCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PQC"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtArrivalAirportName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phú Quốc, Việt Nam"
+                android:textColor="#838383"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtArrivalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chủ nhật, 18/08/2024\n11:05"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

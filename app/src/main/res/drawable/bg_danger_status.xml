@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Màu nền cho background -->
+    <solid android:color="#F24C2F"/> <!-- Màu cam đậm như trong hình -->
+
+    <!-- Đặt các góc bo tròn -->
+    <corners android:radius="8dp"/>
+
+<!--    &lt;!&ndash; Đặt viền cho background (nếu cần) &ndash;&gt;-->
+<!--    <stroke-->
+<!--        android:width="1dp"-->
+<!--        android:color="#D84315"/> &lt;!&ndash; Màu viền cam đậm hơn, hoặc có thể giống với màu nền &ndash;&gt;-->
+
+</shape>
