@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_find_flight"
+    android:padding="16dp">
+
+
+    <!-- Title Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+<!--         Back button -->
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_48"
+            android:layout_gravity="start"
+            />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/title_activity"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:layout_marginStart="56dp"
+            android:gravity="center" />
+    </LinearLayout>
+
+
+    <!-- Container for Departure, Destination, Swap Icon, and Date Picker -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp">
+
+        <!-- Departure and Destination Location (Left Column) -->
+        <LinearLayout
+            android:id="@+id/left_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <!-- Departure location -->
+            <LinearLayout
+                android:id="@+id/txtDeparture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="14dp">
+
+                <TextView
+                    android:id="@+id/departure_location_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ĐIỂM KHỞI HÀNH"
+                    android:textColor="#9B9B9B"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtDepartureCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HAN"
+                    android:textColor="#FFFFFF"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:drawableEnd="@drawable/ic_edit_square_24" />
+
+                <TextView
+                    android:id="@+id/txtDepartureCountry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HÀ NỘI, VIỆT NAM"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Destination location -->
+            <LinearLayout
+                android:id="@+id/txtDestination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="14dp">
+
+                <TextView
+                    android:id="@+id/destination_location_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ĐIỂM ĐẾN"
+                    android:textColor="#9B9B9B"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtDestinationValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DAD"
+                    android:textColor="#FFFFFF"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:drawableRight="@drawable/ic_edit_square_24"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/txtDestinationCountry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ĐÀ NẴNG, VIỆT NAM"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Swap Icon (Middle Column) -->
+        <LinearLayout
+            android:id="@+id/middle_column"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginHorizontal="12dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/btnChangeAirport"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_change_circle_28"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <!-- Date Picker (Right Column) -->
+        <LinearLayout
+            android:id="@+id/txtDatePicker"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/boder_box"
+            android:layout_marginRight="14dp">
+
+            <TextView
+                android:id="@+id/txtIconAddDate"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:drawableStart="@drawable/ic_add_44"
+                android:contentDescription="Select Date" />
+
+            <TextView
+                android:id="@+id/txtAddText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NGÀY ĐI"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:layout_marginTop="4dp" />
+
+            <LinearLayout
+                android:id="@+id/txtViewPickDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/txtDateTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#9B9B9B"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txtDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#FFFFFF"
+                        android:textSize="36sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/txtMonthYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="4dp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtDayOfWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Price Display and Passenger Info Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#9B9B9B"
+            android:layout_marginVertical="8dp" />
+
+        <!-- Passenger Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            >
+
+            <TextView
+                android:id="@+id/passenger_info_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hành khách"
+                android:textColor="#9B9B9B"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/lsvSelectPassenger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/txtQuantityPassenger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01"
+                    android:textColor="#FFFFFF"
+                    android:textSize="38sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txtTypePassenger"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Hành khách\n1 Người lớn"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="4dp"
+                    android:drawableRight="@drawable/ic_arrow_drop_down_38"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#9B9B9B"
+            android:layout_marginVertical="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="6dp">
+
+            <TextView
+                android:id="@+id/info_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Voucher"
+                android:textColor="#9B9B9B"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/txtSelectSeatClass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Nhập mã voucher"
+                android:textColorHint="#BCBBBB"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:layout_marginLeft="4dp"/>
+
+        </LinearLayout>
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#9B9B9B"
+            android:layout_marginVertical="8dp" />
+
+    </LinearLayout>
+
+    <!-- Search button -->
+    <Button
+        android:id="@+id/btnFindFlight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tìm kiếm chuyến bay"
+        android:backgroundTint="#B88A01"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>

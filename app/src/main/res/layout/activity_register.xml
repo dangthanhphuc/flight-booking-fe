@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
 
     <!-- Nội dung chính của ScrollView -->
@@ -45,7 +46,7 @@
                 android:id="@+id/edtTk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/edittext_border"
                 android:hint="Tên tài khoản"
                 android:inputType="textEmailAddress"
                 android:padding="12dp" />
@@ -64,7 +65,7 @@
                 android:id="@+id/edtMk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/edittext_border"
                 android:hint="Mật khẩu"
                 android:inputType="textPassword"
                 android:padding="12dp" />
@@ -83,14 +84,48 @@
                 android:id="@+id/edtNMk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:hint="Mật khẩu"
+                android:background="@drawable/edittext_border"
+                android:hint="Nhập lại mật khẩu"
                 android:inputType="textPassword"
+                android:padding="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Tên"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edtFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_border"
+                android:hint="Vui lòng nhập tên"
+                android:padding="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Họ đệm"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edtLastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_border"
+                android:hint="Nhập lại họ đệm"
                 android:padding="12dp" />
 
             <!-- Nút Đăng nhập -->
             <Button
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

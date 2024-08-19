@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center_vertical"
+    android:weightSum="3">
+
+    <!-- Departure Time and Airport Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tvDepartureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:00"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDepartureCountryCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HAN"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Flight Information Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tvFlightNumbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VN245, VN1414"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <ImageView
+            android:id="@+id/ivFlightIcon"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_plane_arrow_right_white_bg" />
+
+    </LinearLayout>
+
+    <!-- Arrival Time and Airport Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tvArrivalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19:30"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvArrivalCountryCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BMV"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

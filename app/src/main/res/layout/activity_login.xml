@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_gradient"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
 
     <!-- Hình ảnh Logo hoặc Banner -->
@@ -42,7 +43,7 @@
             android:id="@+id/edtTk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
+            android:background="@drawable/edittext_border"
             android:hint="Tên tài khoản"
             android:inputType="textEmailAddress"
             android:padding="12dp" />
@@ -61,7 +62,7 @@
             android:id="@+id/edtMk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
+            android:background="@drawable/edittext_border"
             android:hint="Mật khẩu"
             android:inputType="textPassword"
             android:padding="12dp" />
@@ -89,20 +90,22 @@
 
             <Button
                 android:id="@+id/btnSignUp"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:text="Đăng ký"
                 android:textAllCaps="false"
+                android:maxLines="1"
                 android:textColor="@color/cardview_dark_background" />
 
             <Button
                 android:id="@+id/btnForgotPassword"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:text="Quên mật khẩu"
                 android:textAllCaps="false"
+                android:maxLines="1"
                 android:textColor="@color/cardview_dark_background" />
         </LinearLayout>
     </LinearLayout>

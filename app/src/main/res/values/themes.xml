@@ -6,4 +6,6 @@
     </style>
 
     <style name="Theme.FlightBooking" parent="Base.Theme.FlightBooking" />
+    <dimen name="item_spacing">20dp</dimen>
+    <color name="selectedTextColor">#005A89</color>
 </resources>
