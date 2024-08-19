@@ -49,6 +49,8 @@ public class FindFlightActivity extends AppCompatActivity {
         binding = ActivityFindFlightBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        String locationIndex = intent.getStringExtra("locationIndex");
 
         addEvents();
     }

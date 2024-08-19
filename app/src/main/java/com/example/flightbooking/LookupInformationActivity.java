@@ -24,6 +24,8 @@ import com.example.flightbooking.network.models.Response;
 import com.example.flightbooking.network.responses.FlightResponse;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,8 +44,8 @@ public class LookupInformationActivity extends AppCompatActivity {
 
     private FlightService flightService;
     private List<FlightResponse> flightResponses;
-
-    private List<FlightResponse> filterFlightResponses;
+    private List<FlightResponse> filterFlightResponses = new ArrayList<>(); // Lọc flightResponses qua điểm đi và điểm đến CHƯA LỌC THEO THỜI GIAN
+    private List<FlightResponse> showFlightResponses = new ArrayList<>();;
 
     private LookupInformationAdapter lookupInformationAdapter;
 
@@ -83,30 +85,25 @@ public class LookupInformationActivity extends AppCompatActivity {
 
         getFlights();
 
-        Intent intent = getIntent();
-        String departure =  intent.getStringExtra("departure");
-        String destination = intent.getStringExtra("destination");
-        String departureTime = intent.getStringExtra("departureTime");
-
-        binding.txtDeparture.setText(departure);
-        binding.txtDestination.setText(destination);
-        binding.txtDepartureTime.setText(departureTime);
-
-        //B1 : Lọc lấy flightResponses theo yêu cầu bỏ vào filterFlightResponses
-        // B2 : đưa dữ liệu đã lọc vào adapters
-        // //                    lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, // Tự tạo giao diện hiển thị cho item , filterFlightResponses);
-
-        // Khi chuyển ngày thì lặp lại b1 và b2
-
         addEvents();
         getFlights(); // Lấy chuyến bay từ server
         updateNavigationButtons();
     }
 
+
     private void addEvents() {
         binding.imvExit.setOnClickListener(view -> {
             Intent intent = new Intent(LookupInformationActivity.this, FlightSearchActivity.class);
             startActivity(intent);
+        });
+
+        binding.txtCheckSeatStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LookupInformationActivity.this, FindFlightActivity.class);
+                intent.putExtra("locationIndex", String.valueOf(0));
+                startActivity(intent);
+            }
         });
 
         binding.imvLeft.setOnClickListener(view -> scrollToPreviousItems());
@@ -220,10 +217,25 @@ public class LookupInformationActivity extends AppCompatActivity {
         }
     }
 
+    private void getFlightsMatchLocalDate(String departureTime) {
+        LocalDate departureDateTime = LocalDate.parse(departureTime, DateTimeFormatter.ISO_LOCAL_DATE);
+
+        // Lọc flights theo ngày khởi hành và điểm đi điểm đến
+        for(FlightResponse flightResponse : filterFlightResponses) {
+            LocalDate flightResponseLocalDate = flightResponse.getDepartureDateTime().toLocalDate();
+            if(flightResponseLocalDate.isEqual(departureDateTime) ){
+                showFlightResponses.add(flightResponse);
+            }
+        }
+
+        lookupInformationAdapter.notifyDataSetChanged();
+    }
+
     private void getFlights() {
 
         // Khởi tạo adapter
-        lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, R.layout.lookup_item, filterFlightResponses);
+        lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, R.layout.lookup_item, showFlightResponses);
+        binding.lstShowFlight.setAdapter(lookupInformationAdapter);
 
         Call<Response<List<FlightResponse>>> call = flightService.getFlights();
         call.enqueue(new Callback<Response<List<FlightResponse>>>() {
@@ -232,6 +244,32 @@ public class LookupInformationActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<Response<List<FlightResponse>>> call, @NonNull retrofit2.Response<Response<List<FlightResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     flightResponses = response.body().getData();
+
+                    // Lấy dữ liệu từ FlightSearchActivity
+                    Intent intent = getIntent();
+                    String departureIndex =  intent.getStringExtra("departureIndex");
+                    String destinationIndex = intent.getStringExtra("arrivalIndex");
+                    String departureTime = intent.getStringExtra("departureTime");
+
+                    // Đổi dữ liệu về int
+                    int departure =  Integer.parseInt(departureIndex) + 1;
+                    int destination = Integer.parseInt(destinationIndex) + 1;
+
+                    // Lọc flights theo điểm đi và điểm đến
+                    for(FlightResponse flightResponse : flightResponses) {
+                        if(flightResponse.getFromAirport().getId() == departure &&
+                                flightResponse.getToAirport().getId() == destination  )
+                        {
+                            filterFlightResponses.add(flightResponse); // Thêm phần tử khớp điểm đi và điểm đến
+                        }
+                    }
+
+                    // Nếu có dữ liệu filterFlightResponses
+                    if(!filterFlightResponses.isEmpty()){
+                        // Lọc thêm lần nữa với LocalDate
+                        getFlightsMatchLocalDate(departureTime);
+                    }
+
                 } else {
                     Log.e("Error", "Request failed");
                 }
