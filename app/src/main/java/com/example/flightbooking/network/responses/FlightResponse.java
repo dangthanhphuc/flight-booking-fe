@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
 
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Setter
+@Getter
 public class FlightResponse {
     @SerializedName("flight_number")
     private String flightNumber;

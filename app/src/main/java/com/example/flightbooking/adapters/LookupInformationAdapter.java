@@ -9,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.flightbooking.R;
 import com.example.flightbooking.models.LookupInformationItem;
 import com.example.flightbooking.models.NavigationItem;
+import com.example.flightbooking.network.responses.AirportResponse;
 import com.example.flightbooking.network.responses.FlightResponse;
 
 import java.util.List;
@@ -58,8 +60,11 @@ public class LookupInformationAdapter extends BaseAdapter {
             convertView = inflater.inflate(itemLayout, null);
 
             // Thay vào view holder tương ứng
-//            viewHolder.imvIcon = convertView.findViewById(R.id.imvIcon);
-//            viewHolder.txtName = convertView.findViewById(R.id.txtName);
+            viewHolder.tvDepartureTime = convertView.findViewById(R.id.tvDepartureTime);
+            viewHolder.tvArrivalTime = convertView.findViewById(R.id.tvArrivalTime);
+            viewHolder.tvDepartureCountryCode = convertView.findViewById(R.id.tvDepartureCountryCode);
+            viewHolder.tvArrivalCountryCode = convertView.findViewById(R.id.tvArrivalCountryCode);
+            viewHolder.tvFlightNumbers = convertView.findViewById(R.id.tvFlightNumbers);
 
             convertView.setTag(viewHolder);
         } else {
@@ -69,15 +74,17 @@ public class LookupInformationAdapter extends BaseAdapter {
         // Binding data
         FlightResponse item = flightResponses.get(position);
         // Thay vào view holder tương ứng
-//        viewHolder.txtName.setText(item.getName());
-//        viewHolder.imvIcon.setImageResource(item.getIcon());
+        viewHolder.tvDepartureTime.setText(item.getDepartureDateTime().toLocalTime().toString());
+        viewHolder.tvArrivalTime.setText(item.getArrivalDateTime().toLocalTime().toString());
+        viewHolder.tvDepartureCountryCode.setText(item.getFromAirport().getCountryCode());
+        viewHolder.tvArrivalCountryCode.setText(item.getToAirport().getCountryCode());
+        viewHolder.tvFlightNumbers.setText(item.getFlightNumber());
 
         return convertView;
     }
 
     // Đổi lại đối tượng hiện thị trong view holder của LookupInformation
     private static class LookupInformationViewHolder {
-        ImageView imvIcon;
-        TextView txtName;
+        TextView tvDepartureTime, tvArrivalTime, tvDepartureCountryCode, tvArrivalCountryCode, tvFlightNumbers;
     }
 }
