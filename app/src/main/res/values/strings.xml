@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">FlightBooking</string>
 
+    <string name="a_i_m">Địa điểm</string>
+
     <string name="title_activity">Tìm kiếm chuyến bay</string>
 
     <string-array name="titles_array">

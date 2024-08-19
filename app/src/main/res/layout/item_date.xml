@@ -12,7 +12,7 @@
         android:text="Thứ Hai"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_gravity="center"/>
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/date"
