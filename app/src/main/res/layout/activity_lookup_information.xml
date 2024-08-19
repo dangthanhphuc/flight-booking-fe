@@ -78,7 +78,6 @@
 
 
 
-    </ScrollView>
         <TextView
             android:id="@+id/txtDeparture"
             android:layout_width="match_parent"
