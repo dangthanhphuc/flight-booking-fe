@@ -108,11 +108,16 @@ public class FlightSearchActivity extends AppCompatActivity {
         binding.btnLookup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FlightSearchActivity.this, LookupInformationActivity.class);
-//                private int departureIndex = 1;
-//                private int arrivalIndex = 1;
-
-                startActivity(intent);
+                String departureTime = binding.txtDepartureTime.getText().toString();
+                if(departureIndex != -1 && arrivalIndex != -1 &&  departureIndex != arrivalIndex && !departureTime.isEmpty()){
+                    Intent intent = new Intent(FlightSearchActivity.this, LookupInformationActivity.class);
+                    intent.putExtra("departureIndex", String.valueOf(departureIndex));
+                    intent.putExtra("arrivalIndex", String.valueOf(arrivalIndex));
+                    intent.putExtra("departureTime", departureTime);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(FlightSearchActivity.this, "Điểm đi và điểm đến trùng nhau !", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -213,7 +218,7 @@ public class FlightSearchActivity extends AppCompatActivity {
                 this,
                 (view, year1, month1, dayOfMonth) -> {
                     // Setting the selected date in the TextView
-                    binding.txtDepartureTime.setText(String.format("%02d/%02d/%d", dayOfMonth, month1 + 1, year1));
+                    binding.txtDepartureTime.setText(String.format("%d-%02d-%02d",year1 , month1 + 1, dayOfMonth));
                 },
                 year,
                 month,

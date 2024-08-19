@@ -2,8 +2,15 @@ package com.example.flightbooking.network.responses;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class UserResponse
 {
+    private Long id;
+
     @SerializedName("first_name")
     private String firstName;
 

@@ -4,8 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp"
+    android:background="@drawable/bg_white_radius"
     android:gravity="center_vertical"
-    android:weightSum="3">
+    android:weightSum="3"
+    android:clickable="false"
+    android:focusable="false">
 
     <!-- Departure Time and Airport Column -->
     <LinearLayout
