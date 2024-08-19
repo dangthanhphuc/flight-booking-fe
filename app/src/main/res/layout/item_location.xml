@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/rounded_corner_background"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/imgLocation"
+        android:layout_width="150dp"
+        android:layout_height="220dp"
+        android:contentDescription=""
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Tên địa danh -->
+    <TextView
+        android:id="@+id/txtLocationName"
+        android:layout_width="86dp"
+        android:layout_height="20dp"
+        android:text="Tên địa danh"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imgLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="@+id/imgLocation"
+        app:layout_constraintTop_toTopOf="@+id/imgLocation"
+        app:layout_constraintVertical_bias="0.959" />
+
+    <!--    &lt;!&ndash; Giá địa danh &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewLocationPrice"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Giá từ: 1.000.000 VND"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/imageViewLocation"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/textViewLocationName"-->
+<!--        tools:layout_editor_absoluteX="8dp" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,10 +3,12 @@ package com.example.flightbooking.network.requests;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Setter
 @Getter
 @AllArgsConstructor
@@ -19,4 +21,11 @@ public class RegisterRequest {
 
     @SerializedName("retype_password")
     private String retypePassword;
+
+    @SerializedName("first_name")
+    private String firstName;
+
+    @SerializedName("last_name")
+    private String lastName;
+
 }

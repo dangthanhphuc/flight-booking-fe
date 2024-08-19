@@ -2,12 +2,21 @@ package com.example.flightbooking.network.responses;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AirportResponse {
 
     private Long id;
 
-    @SerializedName("airport_code")
-    private String airportCode;
+    @SerializedName("country_code")
+    private String countryCode;
 
     private String name;
 
