@@ -132,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 AirportResponse clickedLocation = locationList.get(position);
-                Toast.makeText(MainActivity.this, "Clicked: " + clickedLocation.getCountry(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, FindFlightActivity.class);
+                intent.putExtra("locationIndex", String.valueOf(position));
+                startActivity(intent);
             }
         });
         getAirports();
