@@ -39,6 +39,9 @@
             android:name=".ActivityAccountDetail"
             android:exported="false" />
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".BookingManagementActivity"
             android:exported="false" />
         <activity
