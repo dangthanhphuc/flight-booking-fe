@@ -3,17 +3,23 @@ package com.example.flightbooking;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flightbooking.adapters.LookupInformationAdapter;
 import com.example.flightbooking.databinding.ActivityLookupInformationBinding;
 import com.example.flightbooking.databinding.ItemDateBinding;
+import com.example.flightbooking.network.api.FlightService;
+import com.example.flightbooking.network.models.Response;
+import com.example.flightbooking.network.responses.FlightResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,12 +28,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 public class LookupInformationActivity extends AppCompatActivity {
 
     ActivityLookupInformationBinding binding;
     private List<Date> dateList;
     private LinearLayoutManager layoutManager;
     private DateAdapter adapter;
+
+    private FlightService flightService;
+    private List<FlightResponse> flightResponses;
+    private LookupInformationAdapter lookupInformationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +74,26 @@ public class LookupInformationActivity extends AppCompatActivity {
             }
         });
 
+        getFlights();
+
+        Intent intent = getIntent();
+        String departure =  intent.getStringExtra("departure");
+        String destination = intent.getStringExtra("destination");
+        String departureTime = intent.getStringExtra("departureTime");
+
+        binding.txtDeparture.setText(departure);
+        binding.txtDestination.setText(destination);
+        binding.txtDepartureTime.setText(departureTime);
+
+        //B1 : Lọc lấy flightResponses theo yêu cầu bỏ vào filterFlightResponses
+        // B2 : đưa dữ liệu đã lọc vào adapters
+        // //                    lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, // Tự tạo giao diện hiển thị cho item , filterFlightResponses);
+
+        // Khi chuyển ngày thì lặp lại b1 và b2
+
         addEvents();
         updateNavigationButtons();
     }
-
 
     private void addEvents() {
         binding.imvExit.setOnClickListener(view -> {
@@ -122,6 +151,7 @@ public class LookupInformationActivity extends AppCompatActivity {
 
     private class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder> {
         private final List<Date> dateList;
+        private int selectedPosition = RecyclerView.NO_POSITION; // No position selected by default
 
         public DateAdapter(List<Date> dateList) {
             this.dateList = dateList;
@@ -138,6 +168,23 @@ public class LookupInformationActivity extends AppCompatActivity {
             Date date = dateList.get(position);
             holder.binding.dayOfWeek.setText(getDayOfWeek(date));
             holder.binding.date.setText(getDate(date));
+
+            // Update the text color based on the selected position
+            if (selectedPosition == position) {
+                holder.binding.dayOfWeek.setTextColor(getResources().getColor(R.color.selectedTextColor)); // Selected color
+                holder.binding.date.setTextColor(getResources().getColor(R.color.selectedTextColor)); // Selected color
+            } else {
+                holder.binding.dayOfWeek.setTextColor(getResources().getColor(android.R.color.black)); // Default color
+                holder.binding.date.setTextColor(getResources().getColor(android.R.color.black)); // Default color
+            }
+
+            // Handle item click
+            holder.binding.getRoot().setOnClickListener(view -> {
+                int previousPosition = selectedPosition;
+                selectedPosition = holder.getAdapterPosition();
+                notifyItemChanged(previousPosition); // Refresh the previous selected item
+                notifyItemChanged(selectedPosition); // Refresh the current selected item
+            });
         }
 
         @Override
@@ -163,5 +210,26 @@ public class LookupInformationActivity extends AppCompatActivity {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("vi"));
             return dateFormat.format(date);
         }
+    }
+
+    private void getFlights() {
+        Call<Response<List<FlightResponse>>> call = flightService.getFlights();
+        call.enqueue(new Callback<Response<List<FlightResponse>>>() {
+
+            @Override
+            public void onResponse(@NonNull Call<Response<List<FlightResponse>>> call, @NonNull retrofit2.Response<Response<List<FlightResponse>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    flightResponses = response.body().getData();
+//                    lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, R.layout.navigation_item, response.body().getData());
+                } else {
+                    Log.e("Error", "Request failed");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Response<List<FlightResponse>>> call, @NonNull Throwable throwable) {
+                call.timeout();
+            }
+        });
     }
 }
