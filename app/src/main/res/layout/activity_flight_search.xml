@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".FlightSearchActivity">
 
-    <!-- Back Arrow -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -140,13 +140,17 @@
             android:cursorVisible="false"/>
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/btnLookup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tra cứu lịch bay"
-        android:backgroundTint="@android:color/holo_orange_light"
+        android:padding="10dp"
+        android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        android:layout_margin="10dp"/>
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_background_update"/>
 </LinearLayout>

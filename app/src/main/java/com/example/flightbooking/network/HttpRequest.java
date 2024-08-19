@@ -18,8 +18,6 @@ public class HttpRequest {
 
     private static Retrofit retrofit;
     private final static String API_URL = "http://192.168.139.247:8080";
-
-
     private static Retrofit getClient(Context context) {
         if(retrofit == null){
 

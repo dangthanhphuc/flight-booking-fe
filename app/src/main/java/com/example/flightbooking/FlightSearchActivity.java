@@ -1,6 +1,7 @@
 package com.example.flightbooking;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -110,6 +111,7 @@ public class FlightSearchActivity extends AppCompatActivity {
                 Intent intent = new Intent(FlightSearchActivity.this, LookupInformationActivity.class);
 //                private int departureIndex = 1;
 //                private int arrivalIndex = 1;
+
                 startActivity(intent);
             }
         });
@@ -136,6 +138,7 @@ public class FlightSearchActivity extends AppCompatActivity {
                 binding.txtDeparture.setText(nameAirports.get(position));
                 bottomSheetDialog.dismiss();
             }
+          
         });
 
         bottomSheetDialog.show();
@@ -171,11 +174,9 @@ public class FlightSearchActivity extends AppCompatActivity {
         String departure = binding.txtDeparture.getText().toString();
         String destination = binding.txtDestination.getText().toString();
 
-        // Swap values
         binding.txtDeparture.setText(destination);
         binding.txtDestination.setText(departure);
 
-        // Update selected values
         selectedDeparture = destination;
         selectedDestination = departure;
     }

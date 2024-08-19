@@ -18,6 +18,7 @@ import com.example.flightbooking.adapters.LookupInformationAdapter;
 import com.example.flightbooking.databinding.ActivityLookupInformationBinding;
 import com.example.flightbooking.databinding.ItemDateBinding;
 import com.example.flightbooking.network.HttpRequest;
+
 import com.example.flightbooking.network.api.FlightService;
 import com.example.flightbooking.network.models.Response;
 import com.example.flightbooking.network.responses.FlightResponse;
@@ -41,7 +42,9 @@ public class LookupInformationActivity extends AppCompatActivity {
 
     private FlightService flightService;
     private List<FlightResponse> flightResponses;
+
     private List<FlightResponse> filterFlightResponses;
+
     private LookupInformationAdapter lookupInformationAdapter;
 
     @Override
@@ -64,7 +67,6 @@ public class LookupInformationActivity extends AppCompatActivity {
         adapter = new DateAdapter(dateList);
         binding.recyclerView.setAdapter(adapter);
 
-        // Add spacing between items directly
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.item_spacing);
         binding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -79,11 +81,27 @@ public class LookupInformationActivity extends AppCompatActivity {
             }
         });
 
+        getFlights();
+
+        Intent intent = getIntent();
+        String departure =  intent.getStringExtra("departure");
+        String destination = intent.getStringExtra("destination");
+        String departureTime = intent.getStringExtra("departureTime");
+
+        binding.txtDeparture.setText(departure);
+        binding.txtDestination.setText(destination);
+        binding.txtDepartureTime.setText(departureTime);
+
+        //B1 : Lọc lấy flightResponses theo yêu cầu bỏ vào filterFlightResponses
+        // B2 : đưa dữ liệu đã lọc vào adapters
+        // //                    lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, // Tự tạo giao diện hiển thị cho item , filterFlightResponses);
+
+        // Khi chuyển ngày thì lặp lại b1 và b2
+
         addEvents();
         getFlights(); // Lấy chuyến bay từ server
         updateNavigationButtons();
     }
-
 
     private void addEvents() {
         binding.imvExit.setOnClickListener(view -> {
@@ -141,6 +159,7 @@ public class LookupInformationActivity extends AppCompatActivity {
 
     private class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder> {
         private final List<Date> dateList;
+        private int selectedPosition = RecyclerView.NO_POSITION; // No position selected by default
 
         public DateAdapter(List<Date> dateList) {
             this.dateList = dateList;
@@ -157,6 +176,23 @@ public class LookupInformationActivity extends AppCompatActivity {
             Date date = dateList.get(position);
             holder.binding.dayOfWeek.setText(getDayOfWeek(date));
             holder.binding.date.setText(getDate(date));
+
+            // Update the text color based on the selected position
+            if (selectedPosition == position) {
+                holder.binding.dayOfWeek.setTextColor(getResources().getColor(R.color.selectedTextColor)); // Selected color
+                holder.binding.date.setTextColor(getResources().getColor(R.color.selectedTextColor)); // Selected color
+            } else {
+                holder.binding.dayOfWeek.setTextColor(getResources().getColor(android.R.color.black)); // Default color
+                holder.binding.date.setTextColor(getResources().getColor(android.R.color.black)); // Default color
+            }
+
+            // Handle item click
+            holder.binding.getRoot().setOnClickListener(view -> {
+                int previousPosition = selectedPosition;
+                selectedPosition = holder.getAdapterPosition();
+                notifyItemChanged(previousPosition); // Refresh the previous selected item
+                notifyItemChanged(selectedPosition); // Refresh the current selected item
+            });
         }
 
         @Override
@@ -189,7 +225,6 @@ public class LookupInformationActivity extends AppCompatActivity {
         // Khởi tạo adapter
         lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, R.layout.lookup_item, filterFlightResponses);
 
-
         Call<Response<List<FlightResponse>>> call = flightService.getFlights();
         call.enqueue(new Callback<Response<List<FlightResponse>>>() {
 
@@ -197,9 +232,6 @@ public class LookupInformationActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<Response<List<FlightResponse>>> call, @NonNull retrofit2.Response<Response<List<FlightResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     flightResponses = response.body().getData();
-
-
-
                 } else {
                     Log.e("Error", "Request failed");
                 }
