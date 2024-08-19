@@ -17,7 +17,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpRequest {
 
     private static Retrofit retrofit;
+
     private final static String API_URL = "http://192.168.1.100:8080";
+
     private static Retrofit getClient(Context context) {
         if(retrofit == null){
 

@@ -342,4 +342,5 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:layout_marginTop="24dp"/>
+
 </LinearLayout>
