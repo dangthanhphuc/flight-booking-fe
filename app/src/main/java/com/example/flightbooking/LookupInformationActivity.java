@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flightbooking.adapters.LookupInformationAdapter;
 import com.example.flightbooking.databinding.ActivityLookupInformationBinding;
 import com.example.flightbooking.databinding.ItemDateBinding;
+import com.example.flightbooking.network.HttpRequest;
+
 import com.example.flightbooking.network.api.FlightService;
 import com.example.flightbooking.network.models.Response;
 import com.example.flightbooking.network.responses.FlightResponse;
@@ -40,6 +42,9 @@ public class LookupInformationActivity extends AppCompatActivity {
 
     private FlightService flightService;
     private List<FlightResponse> flightResponses;
+
+    private List<FlightResponse> filterFlightResponses;
+
     private LookupInformationAdapter lookupInformationAdapter;
 
     @Override
@@ -47,6 +52,8 @@ public class LookupInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLookupInformationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        flightService = HttpRequest.createService(FlightService.class, this);
 
         dateList = new ArrayList<>();
         populateDateList();
@@ -92,6 +99,7 @@ public class LookupInformationActivity extends AppCompatActivity {
         // Khi chuyển ngày thì lặp lại b1 và b2
 
         addEvents();
+        getFlights(); // Lấy chuyến bay từ server
         updateNavigationButtons();
     }
 
@@ -213,6 +221,10 @@ public class LookupInformationActivity extends AppCompatActivity {
     }
 
     private void getFlights() {
+
+        // Khởi tạo adapter
+        lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, R.layout.lookup_item, filterFlightResponses);
+
         Call<Response<List<FlightResponse>>> call = flightService.getFlights();
         call.enqueue(new Callback<Response<List<FlightResponse>>>() {
 
@@ -220,7 +232,6 @@ public class LookupInformationActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<Response<List<FlightResponse>>> call, @NonNull retrofit2.Response<Response<List<FlightResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     flightResponses = response.body().getData();
-//                    lookupInformationAdapter = new LookupInformationAdapter(LookupInformationActivity.this, R.layout.navigation_item, response.body().getData());
                 } else {
                     Log.e("Error", "Request failed");
                 }
