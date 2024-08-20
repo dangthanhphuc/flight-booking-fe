@@ -71,7 +71,12 @@ public class AuthManager {
         editor.apply();
     }
 
-
+    private void saveUserId(Long userId) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user_id", userId.toString());
+        editor.apply();
+    }
 
     public interface AuthCallback {
         void onSuccess();

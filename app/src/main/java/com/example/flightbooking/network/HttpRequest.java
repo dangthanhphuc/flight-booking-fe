@@ -2,11 +2,13 @@ package com.example.flightbooking.network;
 
 import android.content.Context;
 
+import com.example.flightbooking.adapters.LocalDateAdapter;
 import com.example.flightbooking.adapters.LocalDateTimeAdapter;
 import com.example.flightbooking.interceptors.AuthInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
@@ -18,13 +20,14 @@ public class HttpRequest {
 
     private static Retrofit retrofit;
 
-    private final static String API_URL = "http://192.168.1.100:8080";
+    private final static String API_URL = "http://192.168.139.247:8080";
 
     private static Retrofit getClient(Context context) {
         if(retrofit == null){
 
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) // Đăng ký adapter
+                    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                     .create();
 
             OkHttpClient okHttpClient = new OkHttpClient.Builder()

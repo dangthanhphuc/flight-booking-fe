@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Setter
+@Getter
 public class BookingResponse {
     @SerializedName("booking_code")
     private String bookingCode;
